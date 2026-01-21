@@ -220,3 +220,48 @@ document.getElementById('garden-form')?.addEventListener('submit', function(e) {
     this.reset();
     this.querySelector('input[type="date"]').value = '2024-04-11';
 });
+
+// Функция для создания ссылки на workflow
+function createWorkflowLink(plantName, note, date) {
+    // Кодируем данные для передачи в URL
+    const encodedPlant = encodeURIComponent(plantName);
+    const encodedNote = encodeURIComponent(note);
+    const encodedDate = encodeURIComponent(date);
+    
+    // Ссылка на запуск workflow с параметрами
+    const repo = "v4g7yz29g7-coder/zero-channel-manifesto";
+    return `https://github.com/${repo}/actions/workflows/garden-issue.yml?query=workflow%3A"Создание+Issue+для+сада"&plant=${encodedPlant}&note=${encodedNote}&date=${encodedDate}`;
+}
+
+// Обработчик формы
+document.getElementById('garden-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const plantName = document.getElementById('plant-name').value.trim();
+    const note = document.getElementById('plant-note').value.trim();
+    const date = document.getElementById('plant-date').value;
+    
+    if (!plantName || !note) {
+        alert('Заполните название растения и заметку');
+        return;
+    }
+    
+    // Сохраняем в localStorage (как backup)
+    savePlantGrowth(plantName, note, date);
+    
+    // Показываем ссылку на workflow
+    const link = createWorkflowLink(plantName, note, date);
+    const workflowLinkDiv = document.getElementById('workflow-link');
+    const actionLink = document.getElementById('action-link');
+    
+    actionLink.href = link;
+    actionLink.textContent = `Создать Issue для "${plantName}"`;
+    workflowLinkDiv.style.display = 'block';
+    
+    // Прокручиваем к ссылке
+    workflowLinkDiv.scrollIntoView({ behavior: 'smooth' });
+    
+    // Очищаем форму
+    this.reset();
+    document.getElementById('plant-date').value = new Date().toISOString().split('T')[0];
+});

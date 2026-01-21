@@ -204,6 +204,17 @@
         document.getElementById('workflow-link').style.display = 'block';
     });
 </script>
+    <script>
+    // Экстренный тест
+    console.log("ТЕСТ: Страница загружена");
+    
+    document.addEventListener('click', function(e) {
+        if(e.target.id === 'submit-btn') {
+            alert("Кнопка нажата!");
+            document.getElementById('workflow-link').style.display = 'block';
+        }
+    });
+</script>   
     
 </body>
 </html>

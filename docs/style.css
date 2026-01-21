@@ -418,3 +418,25 @@ blockquote {
         padding: 4rem 0;
     }
 }
+.pulse {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    padding: 3rem 0;
+    border-top: 1px solid var(--fire);
+    border-bottom: 1px solid var(--fire);
+}
+
+.pulse h3 {
+    text-align: center;
+    color: var(--ember);
+    margin-bottom: 2rem;
+}
+
+#pulse-data {
+    background: rgba(255, 107, 53, 0.05);
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--fire);
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+}

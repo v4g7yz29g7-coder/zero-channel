@@ -155,3 +155,19 @@ createPulseAnimation();}
 updatePulse();
 // Обновляем каждые 5 минут
 setInterval(updatePulse, 300000);
+
+// ==================== САД → КОД ====================
+document.getElementById('garden-form')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const plantName = this.querySelector('input[type="text"]').value;
+    const note = this.querySelector('textarea').value;
+    const date = this.querySelector('input[type="date"]').value;
+    
+    // Пока просто демо-сообщение
+    alert(`Рост зафиксирован!\n\nРастение: ${plantName}\nДата: ${date}\nЗаметка: ${note}\n\nВ следующей версии это сохранится в Issues GitHub.`);
+    
+    // Очистка формы
+    this.reset();
+    this.querySelector('input[type="date"]').value = '2024-04-11';
+});

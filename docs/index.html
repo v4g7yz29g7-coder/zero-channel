@@ -204,14 +204,22 @@
         <div class="garden-content">
             <p>Каждое посаженное дерево оставляет след в цифровом пространстве.</p>
             <div class="garden-form">
-                <h3>Добавить рост</h3>
-                <form id="garden-form">
-                    <input type="text" placeholder="Название растения" required>
-                    <textarea placeholder="Заметка о росте..." rows="3"></textarea>
-                    <input type="date" value="2024-04-11">
-                    <button type="submit">Сохранить рост</button>
-                </form>
-                <p class="form-note">Сейчас форма в демо-режиме. Скоро будет сохранять в Issues репозитория.</p>
+<div class="garden-form">
+    <h3>Добавить рост</h3>
+    <form id="garden-form">
+        <input type="text" placeholder="Название растения" id="plant-name" required>
+        <textarea placeholder="Заметка о росте..." id="plant-note" rows="3" required></textarea>
+        <input type="date" id="plant-date" value="2024-04-11">
+        <button type="submit" id="submit-btn">Сохранить рост</button>
+    </form>
+    <div id="workflow-link" style="display: none; margin-top: 20px; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px;">
+        <p>🌱 <strong>Почти готово!</strong></p>
+        <p>Перейди по ссылке ниже, чтобы завершить сохранение в GitHub:</p>
+        <a id="action-link" target="_blank" style="color: #ff6b35; word-break: break-all;">Ссылка</a>
+        <p><small>Откроется новая вкладка → нажми "Run workflow" → вернись сюда.</small></p>
+    </div>
+    <p class="form-note">Данные сохранятся в Issues репозитория как задача с меткой "сад".</p>
+</div>
             </div>
         </div>
     </div>

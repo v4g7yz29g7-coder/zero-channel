@@ -528,3 +528,58 @@ function createPulseAnimation() {
 }
 
 createPulseAnimation();}
+
+/* Сад → Код */
+.garden-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.garden-form {
+    background: var(--ash);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    border: 1px solid var(--ember);
+}
+
+.garden-form h3 {
+    color: var(--fire);
+    margin-bottom: 1.5rem;
+}
+
+.garden-form input,
+.garden-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    background: var(--night);
+    border: 1px solid var(--ash);
+    color: var(--smoke);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+}
+
+.garden-form button {
+    background: var(--fire);
+    color: var(--deep-night);
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.garden-form button:hover {
+    background: var(--ember);
+}
+
+.form-note {
+    font-size: 0.8rem;
+    color: var(--ember);
+    margin-top: 1rem;
+    font-style: italic;
+}    

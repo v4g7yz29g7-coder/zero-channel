@@ -171,3 +171,83 @@ document.getElementById('garden-form')?.addEventListener('submit', function(e) {
     this.reset();
     this.querySelector('input[type="date"]').value = '2024-04-11';
 });
+
+async function updatePulse() {
+    const now = new Date();
+    
+    // Частота (время) и статус (оставляем как есть)
+    document.getElementById('pulse-frequency').textContent = 
+        `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    
+    const statusElement = document.getElementById('pulse-status');
+    const hour = now.getHours();
+    if (hour >= 5 && hour < 12) {
+        statusElement.innerHTML = '☀️ Утренний резонанс';
+    } else if (hour >= 12 && hour < 17) {
+        statusElement.innerHTML = '📡 Дневная активность';
+    } else if (hour >= 17 && hour < 22) {
+        statusElement.innerHTML = '🔥 Вечернее горение';
+    } else {
+        statusElement.innerHTML = '🌙 Ночная тишина';
+    }
+    
+    // ======= ДАННЫЕ GITHUB API =======
+    try {
+        // Получаем информацию о репозитории
+        const repoResponse = await fetch('https://api.github.com/repos/v4g7yz29g7-coder/zero-channel-manifesto');
+        const repoData = await repoResponse.json();
+        
+        // Получаем последний коммит
+        const commitsResponse = await fetch('https://api.github.com/repos/v4g7yz29g7-coder/zero-channel-manifesto/commits?per_page=1');
+        const commitsData = await commitsResponse.json();
+        
+        // Обновляем информацию
+        const lastUpdatedElement = document.getElementById('pulse-updated');
+        if (commitsData.length > 0) {
+            const lastCommitDate = new Date(commitsData[0].commit.author.date);
+            lastUpdatedElement.textContent = lastCommitDate.toLocaleDateString('ru-RU');
+            
+            // Добавляем скрытый хинт при наведении
+            lastUpdatedElement.title = `Коммит: "${commitsData[0].commit.message}"`;
+        } else {
+            lastUpdatedElement.textContent = repoData.updated_at ? 
+                new Date(repoData.updated_at).toLocaleDateString('ru-RU') : 
+                'Ещё не обновлялся';
+        }
+        
+        // Добавляем информацию о звёздах и форках (если есть)
+        const pulseContainer = document.querySelector('.pulse-container');
+        if (pulseContainer && (repoData.stargazers_count > 0 || repoData.forks_count > 0)) {
+            // Создаём дополнительную карточку, если её нет
+            let extraCard = document.querySelector('.pulse-card:nth-child(4)');
+            if (!extraCard) {
+                extraCard = document.createElement('div');
+                extraCard.className = 'pulse-card';
+                extraCard.innerHTML = `
+                    <div class="pulse-icon">⭐</div>
+                    <h3>Сообщество</h3>
+                    <p id="pulse-community">Загрузка...</p>
+                `;
+                pulseContainer.appendChild(extraCard);
+            }
+            
+            const communityText = [];
+            if (repoData.stargazers_count > 0) {
+                communityText.push(`Звёзд: ${repoData.stargazers_count}`);
+            }
+            if (repoData.forks_count > 0) {
+                communityText.push(`Форков: ${repoData.forks_count}`);
+            }
+            
+            document.getElementById('pulse-community').textContent = communityText.join(' | ');
+        }
+        
+    } catch (error) {
+        console.log('GitHub API временно недоступен, используем локальные данные');
+        // Оставляем текущие данные
+    }
+}
+
+// Запускаем сразу и каждые 5 минут
+updatePulse();
+setInterval(updatePulse, 300000);

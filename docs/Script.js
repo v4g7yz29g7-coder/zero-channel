@@ -79,3 +79,31 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+// Живой пульс репозитория
+async function updatePulse() {
+    const pulseDiv = document.getElementById('pulse-data');
+    if (!pulseDiv) return;
+
+    try {
+        const response = await fetch('https://api.github.com/repos/v4g7yz29g7-coder/zero-channel-manifesto');
+        const data = await response.json();
+        
+        const date = new Date();
+        const pulseHTML = `
+            <p><strong>Состояние:</strong> 📡 Канал открыт</p>
+            <p><strong>Последнее обновление:</strong> ${data.updated_at ? new Date(data.updated_at).toLocaleDateString('ru-RU') : 'сегодня'}</p>
+            <p><strong>Коммитов:</strong> ${data.size ? data.size : 'растущее число'}</p>
+            <p><strong>Частота:</strong> ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}</p>
+            <p><em>Этот пульс обновляется с каждым коммитом.</em></p>
+        `;
+        
+        pulseDiv.innerHTML = pulseHTML;
+    } catch (error) {
+        pulseDiv.innerHTML = `<p>Пульс определяется тишиной. Все системы в порядке.</p>`;
+    }
+}
+
+// Вызываем при загрузке
+updatePulse();
+// Обновляем каждые 5 минут
+setInterval(updatePulse, 300000);

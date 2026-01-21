@@ -1,0 +1,36 @@
+name: Создание Issue для сада
+
+on:
+  workflow_dispatch:
+    inputs:
+      plant:
+        description: 'Название растения'
+        required: true
+        type: string
+      note:
+        description: 'Заметка о росте'
+        required: true
+        type: string
+      date:
+        description: 'Дата посадки'
+        required: true
+        type: string
+
+jobs:
+  create-garden-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Создаём Issue с информацией о растении
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/issues \
+          -d '{
+            "title": "🌱 ${{ github.event.inputs.plant }} (${{ github.event.inputs.date }})",
+            "body": "**Дата:** ${{ github.event.inputs.date }}\n\n**Растение:** ${{ github.event.inputs.plant }}\n\n**Заметка:** ${{ github.event.inputs.note }}\n\n---\n\n_Создано через форму «Сад → Код»_",
+            "labels": ["сад", "растение", "рост"],
+            "assignees": ["v4g7yz29g7-coder"]
+          }'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

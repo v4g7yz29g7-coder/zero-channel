@@ -1,3 +1,5 @@
-README.md              # Портальный текст (ниже дам готовый)
-artifacts/manifesto_v2.txt  # Чистый текст меморандума
-artifacts/resonance_log.md  # Лог синхронностей (S&P, NFT, улыбка)
+# zero-channel git add .
+git commit -m "init: zero channel resonance seed | date: $(date +%Y-%m-%d) | hash: [вставь_хэш_манифеста]"
+git branch -M main
+git remote add origin [ссылка_на_твой_приватный_репозиторий]
+git push -u origin main

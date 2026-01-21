@@ -194,6 +194,17 @@
         </div>
     </div>
 </section>
+<script>
+    // Простейшая проверка
+    console.log('Скрипт в HTML работает!');
+    
+    document.getElementById('garden-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Форма работает!');
+        document.getElementById('workflow-link').style.display = 'block';
+    });
+</script>
+    
 </body>
 </html>
 

@@ -1,3 +1,8 @@
+# 1. Перейти в папку проекта
+cd zero-channel-manifesto
+
+# 2. Заменить workflow файл (если не сделал вручную)
+cat > .github/workflows/garden-issue.yml << 'EOF'
 name: Создание Issue для сада
 
 on:
@@ -34,3 +39,9 @@ jobs:
           }'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+EOF
+
+# 3. Закоммитить изменения
+git add .github/workflows/garden-issue.yml docs/script.js
+git commit -m "fix: исправлен workflow и JS код формы"
+git push origin main

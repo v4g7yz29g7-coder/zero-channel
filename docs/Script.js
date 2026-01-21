@@ -101,7 +101,55 @@ async function updatePulse() {
     } catch (error) {
         pulseDiv.innerHTML = `<p>Пульс определяется тишиной. Все системы в порядке.</p>`;
     }
+// ==================== ЖИВОЙ ПУЛЬС ====================
+function updatePulse() {
+    const now = new Date();
+    
+    // Обновляем частоту (время)
+    document.getElementById('pulse-frequency').textContent = 
+        `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    
+    // Статус
+    const statusElement = document.getElementById('pulse-status');
+    const hour = now.getHours();
+    
+    if (hour >= 5 && hour < 12) {
+        statusElement.innerHTML = '☀️ Утренний резонанс';
+    } else if (hour >= 12 && hour < 17) {
+        statusElement.innerHTML = '📡 Дневная активность';
+    } else if (hour >= 17 && hour < 22) {
+        statusElement.innerHTML = '🔥 Вечернее горение';
+    } else {
+        statusElement.innerHTML = '🌙 Ночная тишина';
+    }
+    
+    // Дата последнего обновления (можно заменить на реальную дату коммита)
+    const lastUpdated = document.getElementById('pulse-updated');
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    lastUpdated.textContent = now.toLocaleDateString('ru-RU', options);
 }
+
+// Запускаем сразу и каждую минуту
+updatePulse();
+setInterval(updatePulse, 60000);
+
+// ==================== АНИМАЦИЯ ПУЛЬСА ====================
+function createPulseAnimation() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px var(--fire); }
+            50% { box-shadow: 0 0 20px var(--fire); }
+            100% { box-shadow: 0 0 5px var(--fire); }
+        }
+        .pulse-card {
+            animation: pulse-glow 4s infinite;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+createPulseAnimation();}
 
 // Вызываем при загрузке
 updatePulse();

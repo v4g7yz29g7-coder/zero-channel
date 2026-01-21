@@ -265,3 +265,38 @@ document.getElementById('garden-form').addEventListener('submit', function(e) {
     this.reset();
     document.getElementById('plant-date').value = new Date().toISOString().split('T')[0];
 });
+// ==================== ФОРМА "САД → КОД" ====================
+console.log("Скрипт формы загружен!");
+
+document.getElementById('garden-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const plantName = document.getElementById('plant-name').value;
+    const note = document.getElementById('plant-note').value;
+    const date = document.getElementById('plant-date').value;
+    
+    console.log("Форма отправлена:", plantName, note, date);
+    
+    // Простая проверка
+    if (!plantName || !note) {
+        alert("Заполните все поля!");
+        return;
+    }
+    
+    // Показываем ссылку
+    const linkDiv = document.getElementById('workflow-link');
+    const linkElement = document.getElementById('action-link');
+    
+    // Создаём простую ссылку (пока без параметров)
+    const repo = "v4g7yz29g7-coder/zero-channel-manifesto";
+    const simpleLink = `https://github.com/${repo}/actions/workflows/garden-issue.yml`;
+    
+    linkElement.href = simpleLink;
+    linkElement.textContent = "Нажми здесь, чтобы создать Issue на GitHub";
+    linkDiv.style.display = 'block';
+    
+    // Прокручиваем к ссылке
+    linkDiv.scrollIntoView({ behavior: 'smooth' });
+    
+    console.log("Ссылка показана:", simpleLink);
+});
